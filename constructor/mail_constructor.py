@@ -44,17 +44,20 @@ class MailConstructor:
     def check_encoding(part, content):
         """Checks MIME Content-Type charset encoding and returns mail payload decoded."""
 
-        if part.get_content_charset() == "utf-8":
-            clean_content = content.decode("utf-8")
-        elif part.get_content_charset() == "us-ascii":
-            clean_content = content.decode("us-ascii")
-        elif part.get_content_charset() == "iso-8859-1":
-            clean_content = content.decode("iso-8859-1")
-        else:
-            try:
+        try:
+            if part.get_content_charset() == "utf-8":
                 clean_content = content.decode("utf-8")
-            except UnicodeDecodeError:
+            elif part.get_content_charset() == "us-ascii":
+                clean_content = content.decode("us-ascii")
+            elif part.get_content_charset() == "iso-8859-1":
                 clean_content = content.decode("iso-8859-1")
+            else:
+                try:
+                    clean_content = content.decode("utf-8")
+                except UnicodeDecodeError:
+                    clean_content = content.decode("iso-8859-1")
+        except UnicodeDecodeError:
+            clean_content = "ERRRRRRRRRROOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRR."
 
         return clean_content
 

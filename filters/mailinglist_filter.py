@@ -21,7 +21,6 @@ def filter_subject(mailing_lists, english_mailing_lists, subject):
             mailing_lists = mailing_lists.split(",")
 
         for mailing_list in mailing_lists:
-            print(mailing_list)
             regex = re.compile(mailing_list)
 
             if re.search(regex, subject):

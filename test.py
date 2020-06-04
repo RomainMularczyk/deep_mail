@@ -22,9 +22,10 @@ test.update_mails(last_mail)
 # Converting datetime to RFC822 format
 dt = DateTime(last_mail)
 rfc822_date = f"{dt.day()}-{dt.aMonth()}-{dt.year()}"
+print(rfc822_date)
 
 # Building query to request IMAP object
-query = f"SINCE 26-Mar-2020"
+query = f"SINCE {rfc822_date}"
 
 test.search_mails(query)
 mail = test.get_mail_metadata()
@@ -51,19 +52,19 @@ for m in mail:
 
         print(subject_)
 
-        # try:
-        #     cont_db = Mails(id_=id_,
-        #                     from_=from_,
-        #                     to_=to_,
-        #                     subject_=subject_,
-        #                     date_=date_,
-        #                     text_=text_,
-        #                     interest_=interest_,
-        #                     mailing_list_=mailing_list_,
-        #                     mail_account_=mail_account_)
-        #     cont_db.save()
-        # except ValidationError:
-        #     print(f"Field missing for email with following subject : {subject_}")
+        try:
+            cont_db = Mails(id_=id_,
+                            from_=from_,
+                            to_=to_,
+                            subject_=subject_,
+                            date_=date_,
+                            text_=text_,
+                            interest_=interest_,
+                            mailing_list_=mailing_list_,
+                            mail_account_=mail_account_)
+            cont_db.save()
+        except ValidationError:
+            print(f"Field missing for email with following subject : {subject_}")
 
     else:
         pass
